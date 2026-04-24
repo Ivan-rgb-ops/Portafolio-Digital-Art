@@ -16,7 +16,7 @@ const About = () => {
         </div>
 
         <div className="w-full md:w-1/2">
-          <h1 className="motion-reveal motion-delay-1 text-5xl font-serif mb-10 italic text-gray-900">Sobre Mí</h1>
+          <h1 className="motion-reveal motion-delay-1 text-5xl md:text-6xl font-editorial mb-10 text-gray-900 leading-none">Sobre Mí</h1>
           <div className="space-y-6 text-gray-600 font-light leading-relaxed text-lg">
             <p className="motion-reveal motion-delay-2">
               Soy Abril Cuenca, diseñadora y animadora digital, con experiencia en ilustración y desarrollo visual.
