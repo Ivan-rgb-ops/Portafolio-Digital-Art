@@ -17,7 +17,8 @@ const Portfolio = () => {
   const currentCategoryLabel = useMemo(() => CATEGORIES.find((c) => c.id === category)?.label, [category]);
 
   const openGallery = (art) => {
-    setSelectedGallery(art);
+    const galleryItems = art.gallery?.length ? art.gallery : [{ id: `${art.id}-single`, imageUrl: art.imageUrl }];
+    setSelectedGallery({ ...art, gallery: galleryItems });
     setGalleryIndex(0);
     document.body.style.overflow = 'hidden';
     const footer = document.getElementById('portfolio-footer');
@@ -53,7 +54,7 @@ const Portfolio = () => {
     return (
       <div className="px-6 py-12 max-w-7xl mx-auto">
         <header className="mb-16 text-center">
-          <h1 className="motion-reveal text-4xl font-serif italic mb-4 text-gray-900 tracking-tight">Portafolio</h1>
+          <h1 className="motion-reveal text-5xl md:text-6xl font-editorial mb-4 text-gray-900 leading-none">Portafolio</h1>
           <p className="motion-reveal motion-delay-1 text-gray-400 uppercase tracking-[0.2em] text-[10px]">Galería de proyectos</p>
         </header>
 
@@ -84,7 +85,7 @@ const Portfolio = () => {
             <ArrowLeft size={14} className="mr-2 group-hover:-translate-x-1 transition-transform" />
             Volver al portafolio
           </Link>
-          <h1 className="motion-reveal motion-delay-1 text-3xl md:text-5xl font-serif italic text-gray-900 tracking-tight">{currentCategoryLabel}</h1>
+          <h1 className="motion-reveal motion-delay-1 text-4xl md:text-6xl font-editorial text-gray-900 leading-none">{currentCategoryLabel}</h1>
         </div>
         <p className="motion-reveal motion-delay-2 text-[10px] text-gray-400 uppercase tracking-[0.3em] italic">
           {filteredArtwork.length} {filteredArtwork.length === 1 ? 'Pieza' : 'Piezas'}
@@ -93,11 +94,11 @@ const Portfolio = () => {
 
       <div className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
         {filteredArtwork.map((art, index) => (
-          <div key={art.id} className="motion-reveal break-inside-avoid group cursor-auto" style={{ animationDelay: `${120 + index * 80}ms` }} onClick={() => art.gallery ? openGallery(art) : null}>
+          <div key={art.id} className="motion-reveal break-inside-avoid group cursor-pointer" style={{ animationDelay: `${120 + index * 80}ms` }} onClick={() => openGallery(art)}>
             <div className="hover-card overflow-hidden bg-gray-50 rounded-[24px] transition-all duration-500 relative">
               <img src={getImageUrl(art.imageUrl, { width: 1200, fit: 'limit' })} alt={art.title} className="w-full h-auto object-cover opacity-100 group-hover:scale-[1.025] group-hover:opacity-95 transition-all duration-700" loading="lazy" />
               <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,transparent,rgba(15,23,42,0.05))] opacity-0 transition-opacity duration-500 group-hover:opacity-100"></div>
-              {art.gallery && (
+              {art.gallery && art.gallery.length > 1 && (
                 <div className="absolute top-3 right-3 bg-white/80 backdrop-blur-sm px-2 py-1 rounded-full text-[10px] font-bold text-gray-900 shadow-sm">
                   1/{art.gallery.length}
                 </div>
