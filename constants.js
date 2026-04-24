@@ -18,8 +18,8 @@ export const SOCIAL_LINKS = [
   {
     id: 'youtube',
     name: 'YouTube',
-    url: 'https://youtube.com/@tu_canal',
-    handle: 'Abril Process',
+    url: 'https://www.youtube.com/@abbilenerose',
+    handle: '@abbilenerose',
   },
 ];
 
