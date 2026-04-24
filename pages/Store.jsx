@@ -20,7 +20,7 @@ const Store = () => {
   return (
     <div className="px-6 py-20 max-w-7xl mx-auto">
       <header className="mb-16 text-center">
-        <h1 className="motion-reveal text-4xl font-serif mb-12 italic text-gray-900">The Shop</h1>
+        <h1 className="motion-reveal text-5xl md:text-6xl font-editorial mb-12 text-gray-900 leading-none">The Shop</h1>
 
         <div className="motion-reveal motion-delay-1 flex flex-wrap justify-center gap-4 md:gap-10">
           {categories.map((cat) => (
