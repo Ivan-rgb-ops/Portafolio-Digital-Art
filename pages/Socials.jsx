@@ -15,8 +15,8 @@ const Socials = () => {
   return (
     <div className="px-6 py-20 max-w-2xl mx-auto">
       <header className="mb-20 text-center">
-        <h1 className="motion-reveal text-4xl font-serif mb-4 italic text-gray-900">Conectemos</h1>
-        <p className="motion-reveal motion-delay-1 text-gray-400 tracking-[0.3em] text-[10px] uppercase">Mantente al tanto de mis últimos procesos y noticias</p>
+        <h1 className="motion-reveal text-5xl md:text-6xl font-editorial mb-4 text-gray-900 leading-none">Conectemos</h1>
+        <p className="motion-reveal motion-delay-1 font-meta text-gray-400 text-[10px] uppercase">Mantente al tanto de mis últimos procesos y noticias</p>
       </header>
 
       <div className="space-y-4">
@@ -43,7 +43,7 @@ const Socials = () => {
           <Mail size={12} className="text-blue-500/50" />
           <span>Business Inquiries</span>
         </div>
-        <a href={`mailto:${CONTACT_INFO.email}`} className="text-xl font-light text-gray-600 hover:text-black transition-colors tracking-tight inline-block hover-lift">
+        <a href={`mailto:${CONTACT_INFO.email}`} className="font-meta text-sm md:text-base text-gray-600 hover:text-black transition-colors inline-block hover-lift">
           {CONTACT_INFO.email}
         </a>
       </div>
