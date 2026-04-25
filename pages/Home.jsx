@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Instagram, Linkedin, Youtube, ArrowRight } from 'lucide-react';
-import { ARTWORK, SOCIAL_LINKS } from '../constants';
+import { Instagram, Linkedin, Youtube, Mail, ArrowRight } from 'lucide-react';
+import { ARTWORK, SOCIAL_LINKS, CONTACT_INFO } from '../constants';
 import { getImageUrl } from '../utils/media';
 
 const getIcon = (id) => {
@@ -9,6 +9,7 @@ const getIcon = (id) => {
     case 'instagram': return <Instagram size={20} strokeWidth={2} />;
     case 'linkedin': return <Linkedin size={20} strokeWidth={2} />;
     case 'youtube': return <Youtube size={20} strokeWidth={2} />;
+    case 'gmail': return <Mail size={20} strokeWidth={2} />;
     default: return null;
   }
 };
@@ -18,6 +19,14 @@ const Home = () => {
   const [isBackdropReady, setIsBackdropReady] = useState(false);
 
   const backgroundImages = ARTWORK.map((art) => art.imageUrl);
+  const homeLinks = [
+    ...SOCIAL_LINKS,
+    {
+      id: 'gmail',
+      name: 'Gmail',
+      url: `mailto:${CONTACT_INFO.email}`,
+    },
+  ];
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -28,7 +37,7 @@ const Home = () => {
   }, [backgroundImages.length]);
 
   return (
-    <div className="relative h-[calc(100vh-80px)] w-full overflow-hidden flex flex-col items-center justify-center bg-slate-100">
+    <div className="relative h-screen w-full overflow-hidden flex flex-col items-center justify-center bg-slate-100">
       <div className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.88),rgba(241,245,249,0.94))]"></div>
       <div className={`absolute inset-0 z-0 transition-opacity duration-700 ${isBackdropReady ? 'opacity-100' : 'opacity-0'}`}>
         {backgroundImages.map((img, index) => (
@@ -66,15 +75,21 @@ const Home = () => {
         </Link>
       </div>
 
-      <div className="absolute bottom-12 left-0 w-full z-10 flex flex-col items-center floating-accent">
+      <div className="absolute bottom-24 md:bottom-20 left-0 w-full z-10 flex flex-col items-center floating-accent">
         <div className="flex space-x-8 text-gray-900">
-          {SOCIAL_LINKS.map((social) => (
-            <a key={social.id} href={social.url} target="_blank" rel="noopener noreferrer" className="hover-icon bg-white/55 p-2 rounded-full glass-panel shadow-sm hover:text-blue-600" title={social.name}>
+          {homeLinks.map((social) => (
+            <a
+              key={social.id}
+              href={social.url}
+              target={social.id === 'gmail' ? undefined : '_blank'}
+              rel={social.id === 'gmail' ? undefined : 'noopener noreferrer'}
+              className="hover-icon bg-white/55 p-2 rounded-full glass-panel shadow-sm hover:text-blue-600"
+              title={social.name}
+            >
               {getIcon(social.id)}
             </a>
           ))}
         </div>
-        <div className="line-grow mt-6 w-px h-12 bg-gray-900/30"></div>
       </div>
     </div>
   );
