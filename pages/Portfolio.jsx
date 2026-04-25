@@ -7,6 +7,7 @@ import { getImageUrl } from '../utils/media';
 const Portfolio = () => {
   const { category } = useParams();
   const [selectedGallery, setSelectedGallery] = useState(null);
+  const [selectedArtworkIndex, setSelectedArtworkIndex] = useState(0);
   const [galleryIndex, setGalleryIndex] = useState(0);
 
   const filteredArtwork = useMemo(() => {
@@ -16,9 +17,10 @@ const Portfolio = () => {
 
   const currentCategoryLabel = useMemo(() => CATEGORIES.find((c) => c.id === category)?.label, [category]);
 
-  const openGallery = (art) => {
+  const openGallery = (art, artIndex) => {
     const galleryItems = art.gallery?.length ? art.gallery : [{ id: `${art.id}-single`, imageUrl: art.imageUrl }];
     setSelectedGallery({ ...art, gallery: galleryItems });
+    setSelectedArtworkIndex(artIndex);
     setGalleryIndex(0);
     document.body.style.overflow = 'hidden';
     const footer = document.getElementById('portfolio-footer');
@@ -31,6 +33,7 @@ const Portfolio = () => {
 
   const closeGallery = () => {
     setSelectedGallery(null);
+    setSelectedArtworkIndex(0);
     setGalleryIndex(0);
     document.body.style.overflow = 'unset';
     const footer = document.getElementById('portfolio-footer');
@@ -50,6 +53,74 @@ const Portfolio = () => {
     }
   }, []);
 
+  const goToNextImage = () => {
+    if (!selectedGallery) return;
+
+    if (galleryIndex < selectedGallery.gallery.length - 1) {
+      setGalleryIndex((prev) => prev + 1);
+      return;
+    }
+
+    if (selectedArtworkIndex >= filteredArtwork.length - 1) {
+      return;
+    }
+
+    const nextArtworkIndex = selectedArtworkIndex + 1;
+    const nextArtwork = filteredArtwork[nextArtworkIndex];
+    const nextGalleryItems = nextArtwork.gallery?.length ? nextArtwork.gallery : [{ id: `${nextArtwork.id}-single`, imageUrl: nextArtwork.imageUrl }];
+
+    setSelectedArtworkIndex(nextArtworkIndex);
+    setSelectedGallery({ ...nextArtwork, gallery: nextGalleryItems });
+    setGalleryIndex(0);
+  };
+
+  const goToPreviousImage = () => {
+    if (!selectedGallery) return;
+
+    if (galleryIndex > 0) {
+      setGalleryIndex((prev) => prev - 1);
+      return;
+    }
+
+    if (selectedArtworkIndex <= 0) {
+      return;
+    }
+
+    const previousArtworkIndex = selectedArtworkIndex - 1;
+    const previousArtwork = filteredArtwork[previousArtworkIndex];
+    const previousGalleryItems = previousArtwork.gallery?.length ? previousArtwork.gallery : [{ id: `${previousArtwork.id}-single`, imageUrl: previousArtwork.imageUrl }];
+
+    setSelectedArtworkIndex(previousArtworkIndex);
+    setSelectedGallery({ ...previousArtwork, gallery: previousGalleryItems });
+    setGalleryIndex(previousGalleryItems.length - 1);
+  };
+
+  useEffect(() => {
+    if (!selectedGallery) return;
+
+    const onKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        closeGallery();
+      }
+
+      if (event.key === 'ArrowRight') {
+        goToNextImage();
+      }
+
+      if (event.key === 'ArrowLeft') {
+        goToPreviousImage();
+      }
+    };
+
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [selectedGallery, galleryIndex, selectedArtworkIndex, filteredArtwork.length]);
+
+  const isAtSequenceStart = selectedGallery ? selectedArtworkIndex === 0 && galleryIndex === 0 : false;
+  const isAtSequenceEnd = selectedGallery
+    ? selectedArtworkIndex === filteredArtwork.length - 1 && galleryIndex === selectedGallery.gallery.length - 1
+    : false;
+
   if (!category) {
     return (
       <div className="px-6 py-12 max-w-7xl mx-auto">
@@ -58,7 +129,7 @@ const Portfolio = () => {
           <p className="motion-reveal motion-delay-1 text-gray-400 uppercase tracking-[0.2em] text-[10px]">Galería de proyectos</p>
         </header>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {CATEGORIES.map((cat, index) => {
             const coverImage = ARTWORK.find((a) => a.category === cat.id)?.imageUrl || 'https://picsum.photos/seed/placeholder/800/1000';
 
@@ -94,7 +165,7 @@ const Portfolio = () => {
 
       <div className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
         {filteredArtwork.map((art, index) => (
-          <div key={art.id} className="motion-reveal break-inside-avoid group cursor-pointer" style={{ animationDelay: `${120 + index * 80}ms` }} onClick={() => openGallery(art)}>
+          <div key={art.id} className="motion-reveal break-inside-avoid group cursor-pointer" style={{ animationDelay: `${120 + index * 80}ms` }} onClick={() => openGallery(art, index)}>
             <div className="hover-card overflow-hidden bg-gray-50 rounded-[24px] transition-all duration-500 relative">
               <img src={getImageUrl(art.imageUrl, { width: 1200, fit: 'limit' })} alt={art.title} className="w-full h-auto object-cover opacity-100 group-hover:scale-[1.025] group-hover:opacity-95 transition-all duration-700" loading="lazy" />
               <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,transparent,rgba(15,23,42,0.05))] opacity-0 transition-opacity duration-500 group-hover:opacity-100"></div>
@@ -109,34 +180,58 @@ const Portfolio = () => {
       </div>
 
       {selectedGallery && selectedGallery.gallery && (
-        <div className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4 motion-page" onClick={closeGallery}>
-          <div className="relative w-full max-w-2xl motion-reveal" onClick={(e) => e.stopPropagation()}>
-            <div className="relative bg-black rounded-[28px] overflow-hidden mb-4 shadow-2xl">
-              <img src={getImageUrl(selectedGallery.gallery[galleryIndex].imageUrl, { width: 1800, fit: 'limit' })} alt={`${selectedGallery.title} ${galleryIndex + 1}`} className="w-full h-auto object-contain max-h-[70vh] motion-page" />
+        <div className="fixed inset-0 bg-black/92 backdrop-blur-xl z-50 flex items-center justify-center p-4 motion-page" onClick={closeGallery}>
+          <div className="relative w-full max-w-[min(92vw,1100px)] flex flex-col items-center motion-reveal">
+            <div className="gallery-frame relative w-auto max-w-full rounded-[28px] overflow-hidden mb-4" onClick={(e) => e.stopPropagation()}>
+              <img
+                key={`backdrop-${selectedGallery.id}-${galleryIndex}`}
+                src={getImageUrl(selectedGallery.gallery[galleryIndex].imageUrl, { width: 1800, fit: 'limit' })}
+                alt=""
+                aria-hidden="true"
+                className="gallery-backdrop w-full h-full object-cover rounded-[28px]"
+              />
+              <img
+                key={`${selectedGallery.id}-${galleryIndex}`}
+                src={getImageUrl(selectedGallery.gallery[galleryIndex].imageUrl, { width: 1800, fit: 'limit' })}
+                alt={`${selectedGallery.title} ${galleryIndex + 1}`}
+                className="gallery-main-image block w-auto max-w-full h-auto max-h-[70vh] rounded-[28px]"
+              />
 
-              {selectedGallery.gallery.length > 1 && (
-                <>
-                  <button onClick={() => setGalleryIndex((prev) => (prev - 1 + selectedGallery.gallery.length) % selectedGallery.gallery.length)} className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/40 text-white p-2 rounded-full transition-all duration-300 hover:scale-110">
-                    <ChevronLeft size={24} />
-                  </button>
-                  <button onClick={() => setGalleryIndex((prev) => (prev + 1) % selectedGallery.gallery.length)} className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/40 text-white p-2 rounded-full transition-all duration-300 hover:scale-110">
-                    <ChevronRight size={24} />
-                  </button>
-                </>
+              {filteredArtwork.length > 1 && (
+                <button
+                  onClick={goToPreviousImage}
+                  disabled={isAtSequenceStart}
+                  className={`absolute z-20 left-4 top-1/2 -translate-y-1/2 p-2 rounded-full transition-all duration-300 ${
+                    isAtSequenceStart ? 'bg-white/10 text-white/35 cursor-not-allowed' : 'bg-white/20 hover:bg-white/40 text-white hover:scale-110'
+                  }`}
+                >
+                  <ChevronLeft size={24} />
+                </button>
+              )}
+              {filteredArtwork.length > 1 && (
+                <button
+                  onClick={goToNextImage}
+                  disabled={isAtSequenceEnd}
+                  className={`absolute z-20 right-4 top-1/2 -translate-y-1/2 p-2 rounded-full transition-all duration-300 ${
+                    isAtSequenceEnd ? 'bg-white/10 text-white/35 cursor-not-allowed' : 'bg-white/20 hover:bg-white/40 text-white hover:scale-110'
+                  }`}
+                >
+                  <ChevronRight size={24} />
+                </button>
               )}
 
-              <button onClick={closeGallery} className="absolute top-4 right-4 bg-white/20 hover:bg-white/40 text-white p-2 rounded-full transition-all duration-300 hover:rotate-90">
+              <button onClick={closeGallery} className="absolute z-20 top-4 right-4 bg-white/20 hover:bg-white/40 text-white p-2 rounded-full transition-all duration-300 hover:rotate-90">
                 <X size={24} />
               </button>
 
-              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+              <div className="absolute z-20 bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
                 {selectedGallery.gallery.map((_, idx) => (
                   <div key={idx} className={`h-2 rounded-full transition-all ${idx === galleryIndex ? 'bg-white w-6' : 'bg-white/50 w-2'}`} />
                 ))}
               </div>
             </div>
 
-            <div className="text-center">
+            <div className="text-center" onClick={(e) => e.stopPropagation()}>
               <p className="text-white text-sm font-light uppercase tracking-widest">{selectedGallery.title}</p>
               <p className="text-white/60 text-xs mt-2">{galleryIndex + 1} de {selectedGallery.gallery.length}</p>
             </div>
