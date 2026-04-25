@@ -1,5 +1,5 @@
 export const CONTACT_INFO = {
-  email: 'contact@abrilcuenca.com',
+  email: 'cuencaabril7@gmail.com',
 };
 
 export const SOCIAL_LINKS = [
