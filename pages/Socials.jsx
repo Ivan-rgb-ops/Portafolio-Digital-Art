@@ -18,7 +18,7 @@ const Socials = () => {
     {
       id: 'gmail',
       name: 'Gmail',
-      url: `mailto:${CONTACT_INFO.email}`,
+      url: CONTACT_INFO.gmailComposeUrl,
       handle: CONTACT_INFO.email,
     },
   ];
@@ -35,8 +35,8 @@ const Socials = () => {
           <a
             key={link.id}
             href={link.url}
-            target={link.id === 'gmail' ? undefined : '_blank'}
-            rel={link.id === 'gmail' ? undefined : 'noopener noreferrer'}
+            target="_blank"
+            rel="noopener noreferrer"
             className="motion-reveal hover-card group flex items-center justify-between p-8 bg-gray-50 hover:bg-white border border-gray-100 hover:border-blue-500/30 transition-all duration-500 rounded-[24px]"
             style={{ animationDelay: `${120 + index * 90}ms` }}
           >
@@ -54,7 +54,7 @@ const Socials = () => {
           <Mail size={12} className="text-blue-500/50" />
           <span>Business Inquiries</span>
         </div>
-        <a href={`mailto:${CONTACT_INFO.email}`} className="font-meta text-sm md:text-base text-gray-600 hover:text-black transition-colors inline-block hover-lift">
+        <a href={CONTACT_INFO.gmailComposeUrl} target="_blank" rel="noopener noreferrer" className="font-meta text-sm md:text-base text-gray-600 hover:text-black transition-colors inline-block hover-lift">
           {CONTACT_INFO.email}
         </a>
       </div>
