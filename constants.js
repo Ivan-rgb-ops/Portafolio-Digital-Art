@@ -1,5 +1,6 @@
 export const CONTACT_INFO = {
   email: 'cuencaabril7@gmail.com',
+  gmailComposeUrl: 'https://mail.google.com/mail/?view=cm&fs=1&to=cuencaabril7@gmail.com',
 };
 
 export const SOCIAL_LINKS = [
