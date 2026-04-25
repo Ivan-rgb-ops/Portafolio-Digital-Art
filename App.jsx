@@ -3,7 +3,6 @@ import { HashRouter as Router, Routes, Route, Link, useLocation } from 'react-ro
 import { Menu, X, Instagram, Linkedin, Youtube } from 'lucide-react';
 import Home from './pages/Home';
 import Portfolio from './pages/Portfolio';
-import Store from './pages/Store';
 import About from './pages/About';
 import Socials from './pages/Socials';
 import { SOCIAL_LINKS } from './constants';
@@ -27,7 +26,6 @@ const Navbar = () => {
 
   const navLinks = [
     { name: 'Portafolio', path: '/portfolio' },
-    { name: 'Tienda', path: '/store' },
     { name: 'Sobre mí', path: '/about' },
     { name: 'Redes sociales', path: '/socials' },
   ];
@@ -90,7 +88,6 @@ const AnimatedRoutes = () => {
         <Route path="/" element={<Home />} />
         <Route path="/portfolio" element={<Portfolio />} />
         <Route path="/portfolio/:category" element={<Portfolio />} />
-        <Route path="/store" element={<Store />} />
         <Route path="/about" element={<About />} />
         <Route path="/socials" element={<Socials />} />
       </Routes>
@@ -113,9 +110,12 @@ const Footer = () => {
   );
 };
 
-const App = () => (
-  <Router>
-    <div className="min-h-screen flex flex-col pt-20 overflow-x-hidden relative text-gray-900 bg-white">
+const AppShell = () => {
+  const location = useLocation();
+  const isHome = location.pathname === '/';
+
+  return (
+    <div className={`min-h-screen flex flex-col overflow-x-hidden relative text-gray-900 bg-white ${isHome ? '' : 'pt-20'}`}>
       <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
         <div
           className="absolute -top-[10%] -right-[5%] w-[600px] h-[600px] rounded-full opacity-40 blur-[120px] animated-orb"
@@ -127,12 +127,18 @@ const App = () => (
         ></div>
       </div>
 
-      <Navbar />
+      {!isHome && <Navbar />}
       <main className="flex-grow relative z-10 flex flex-col">
         <AnimatedRoutes />
       </main>
       <Footer />
     </div>
+  );
+};
+
+const App = () => (
+  <Router>
+    <AppShell />
   </Router>
 );
 
