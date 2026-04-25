@@ -24,7 +24,7 @@ const Home = () => {
     {
       id: 'gmail',
       name: 'Gmail',
-      url: `mailto:${CONTACT_INFO.email}`,
+      url: CONTACT_INFO.gmailComposeUrl,
     },
   ];
 
