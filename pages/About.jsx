@@ -2,9 +2,9 @@ import React from 'react';
 
 const About = () => {
   return (
-    <div className="px-6 py-20 max-w-5xl mx-auto">
-      <div className="flex flex-col md:flex-row gap-16 items-start">
-        <div className="w-full md:w-1/2 motion-reveal">
+    <div className="px-6 py-20 max-w-6xl mx-auto">
+      <div className="flex flex-col md:flex-row-reverse gap-16 items-start">
+        <div className="w-full md:w-[44%] motion-reveal">
           <div className="relative group floating-accent">
             <div className="absolute -inset-4 bg-blue-500/5 rounded-xl blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
             <img
@@ -15,8 +15,8 @@ const About = () => {
           </div>
         </div>
 
-        <div className="w-full md:w-1/2">
-          <h1 className="motion-reveal motion-delay-1 text-5xl md:text-6xl font-editorial mb-10 text-gray-900 leading-none">Sobre Mí</h1>
+        <div className="w-full md:w-[56%]">
+          <h1 className="motion-reveal motion-delay-1 text-5xl md:text-6xl font-editorial mb-10 text-gray-900 leading-none text-left">Sobre Mí</h1>
           <div className="space-y-6 text-gray-600 font-light leading-relaxed text-lg">
             <p className="motion-reveal motion-delay-2">
               Soy Abril Cuenca, diseñadora y animadora digital, con experiencia en ilustración y desarrollo visual.
@@ -27,12 +27,6 @@ const About = () => {
             <p className="motion-reveal motion-delay-4">
               A lo largo de mi desarrollo profesional, he construido una voz visual versátil y consciente, capaz de adaptarse a distintos proyectos sin perder carácter.
             </p>
-
-            <div className="motion-reveal motion-delay-4 pt-10">
-              <a href="mailto:contact@abrilcuenca.com" className="hover-lift inline-block px-10 py-5 bg-gray-900 text-white text-[10px] uppercase tracking-[0.4em] font-bold hover:bg-blue-600 transition-all shadow-lg hover:shadow-blue-500/20 rounded-full">
-                Trabajemos juntos
-              </a>
-            </div>
           </div>
         </div>
       </div>
