@@ -7,25 +7,36 @@ const getIcon = (id) => {
     case 'instagram': return <Instagram size={20} />;
     case 'linkedin': return <Linkedin size={20} />;
     case 'youtube': return <Youtube size={20} />;
+    case 'gmail': return <Mail size={20} />;
     default: return <Instagram size={20} />;
   }
 };
 
 const Socials = () => {
+  const socialEntries = [
+    ...SOCIAL_LINKS,
+    {
+      id: 'gmail',
+      name: 'Gmail',
+      url: `mailto:${CONTACT_INFO.email}`,
+      handle: CONTACT_INFO.email,
+    },
+  ];
+
   return (
     <div className="px-6 py-20 max-w-2xl mx-auto">
       <header className="mb-20 text-center">
-        <h1 className="motion-reveal text-5xl md:text-6xl font-editorial mb-4 text-gray-900 leading-none">Conectemos</h1>
-        <p className="motion-reveal motion-delay-1 font-meta text-gray-400 text-[10px] uppercase">Mantente al tanto de mis últimos procesos y noticias</p>
+        <h1 className="motion-reveal text-5xl md:text-6xl font-editorial mb-4 text-gray-900 leading-none">Contáctame</h1>
+        <p className="motion-reveal motion-delay-1 font-meta text-gray-400 text-[10px] uppercase">Mantente al tanto de mis ultimos procesos y noticias</p>
       </header>
 
       <div className="space-y-4">
-        {SOCIAL_LINKS.map((link, index) => (
+        {socialEntries.map((link, index) => (
           <a
             key={link.id}
             href={link.url}
-            target="_blank"
-            rel="noopener noreferrer"
+            target={link.id === 'gmail' ? undefined : '_blank'}
+            rel={link.id === 'gmail' ? undefined : 'noopener noreferrer'}
             className="motion-reveal hover-card group flex items-center justify-between p-8 bg-gray-50 hover:bg-white border border-gray-100 hover:border-blue-500/30 transition-all duration-500 rounded-[24px]"
             style={{ animationDelay: `${120 + index * 90}ms` }}
           >
