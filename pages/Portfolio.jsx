@@ -168,6 +168,7 @@ const Portfolio = () => {
                   src={getImageUrl(coverImage, { width: 1200, fit: 'limit' })}
                   alt={cat.label}
                   className="w-full h-full object-cover transition-transform duration-[1400ms] group-hover:scale-[1.08]"
+                  decoding="async"
                 />
                 <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(15,23,42,0.10),rgba(15,23,42,0.34))] group-hover:bg-[linear-gradient(180deg,rgba(15,23,42,0.16),rgba(15,23,42,0.5))] transition-colors duration-500 flex flex-col items-center justify-center p-6 text-center">
                   <h2 className="text-white text-[10px] md:text-[12px] uppercase tracking-[0.5em] font-bold drop-shadow-md transition-transform duration-500 group-hover:-translate-y-1">
@@ -218,6 +219,7 @@ const Portfolio = () => {
                 alt={art.title}
                 className="w-full h-auto object-cover opacity-100 group-hover:scale-[1.025] group-hover:opacity-95 transition-all duration-700"
                 loading="lazy"
+                decoding="async"
               />
               <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,transparent,rgba(15,23,42,0.05))] opacity-0 transition-opacity duration-500 group-hover:opacity-100"></div>
               {art.gallery && art.gallery.length > 1 && (
