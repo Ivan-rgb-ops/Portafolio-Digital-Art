@@ -72,22 +72,23 @@ const Navbar = () => {
       </nav>
 
       {isOpen && (
-        <div className="fixed inset-0 top-[72px] z-[60] bg-white md:hidden">
+        <div className="fixed inset-0 top-[72px] z-[60] bg-white/96 backdrop-blur-lg md:hidden mobile-menu-panel">
           <div className="flex h-full flex-col justify-between px-6 pt-12 pb-10">
             <div className="flex flex-col items-center gap-8 text-xl font-light uppercase tracking-[0.2em] text-gray-900 text-center">
-              {navLinks.map((link) => (
+              {navLinks.map((link, index) => (
                 <Link
                   key={link.path}
                   to={link.path}
                   onClick={() => setIsOpen(false)}
-                  className="transition-all duration-300 hover:text-blue-500 hover:-translate-y-1"
+                  className="mobile-menu-item transition-all duration-300 hover:text-blue-500 hover:-translate-y-1"
+                  style={{ animationDelay: `${80 + index * 70}ms` }}
                 >
                   {link.name}
                 </Link>
               ))}
             </div>
 
-            <div className="flex items-center justify-center gap-8 pt-8 text-gray-400">
+            <div className="mobile-menu-socials flex items-center justify-center gap-8 pt-8 text-gray-400">
               {SOCIAL_LINKS.map((social) => (
                 <a
                   key={social.id}
