@@ -19,6 +19,9 @@ body {
     linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
   font-family: 'Inter', sans-serif;
   color: #111827;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .font-serif {
@@ -112,6 +115,7 @@ body {
 .hero-image {
   animation: slow-zoom 9s ease-in-out infinite alternate;
   transform-origin: center;
+  will-change: transform;
 }
 
 .hero-title-line {
@@ -135,6 +139,15 @@ body {
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
   border: 1px solid var(--border-soft);
+}
+
+a,
+button {
+  touch-action: manipulation;
+}
+
+img {
+  content-visibility: auto;
 }
 
 .gallery-frame {
@@ -165,6 +178,12 @@ body {
   z-index: 1;
   pointer-events: none;
   animation: gallery-image-in 420ms var(--ease-smooth);
+  will-change: transform, opacity;
+}
+
+.motion-reveal,
+.hover-card,
+.hover-icon {
   will-change: transform, opacity;
 }
 
@@ -218,6 +237,39 @@ body {
 @keyframes gallery-fade {
   from { opacity: 0; }
   to { opacity: 0.38; }
+}
+
+@media (max-width: 767px) {
+  .motion-page {
+    animation-duration: 420ms;
+  }
+
+  .motion-reveal {
+    animation-duration: 460ms;
+  }
+
+  .floating-accent,
+  .hero-image,
+  .hero-title-line {
+    animation: none !important;
+  }
+
+  .glass-panel {
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+
+  .hover-card:hover,
+  .hover-lift:hover,
+  .hover-icon:hover {
+    transform: none;
+    box-shadow: none;
+  }
+
+  .gallery-backdrop {
+    filter: blur(20px) saturate(1.02);
+    opacity: 0.28;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
