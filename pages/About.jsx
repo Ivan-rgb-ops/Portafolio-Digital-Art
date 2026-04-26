@@ -2,8 +2,8 @@ import React from 'react';
 
 const About = () => {
   return (
-    <div className="px-6 py-20 max-w-6xl mx-auto">
-      <div className="flex flex-col md:flex-row-reverse gap-16 items-start">
+    <div className="px-4 sm:px-6 py-12 sm:py-20 max-w-6xl mx-auto">
+      <div className="flex flex-col-reverse md:flex-row-reverse gap-10 sm:gap-16 items-start">
         <div className="w-full md:w-[44%] motion-reveal">
           <div className="relative group floating-accent">
             <div className="absolute -inset-4 bg-blue-500/5 rounded-xl blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
@@ -16,8 +16,8 @@ const About = () => {
         </div>
 
         <div className="w-full md:w-[56%]">
-          <h1 className="motion-reveal motion-delay-1 text-5xl md:text-6xl font-editorial mb-10 text-gray-900 leading-none text-left">Sobre Mí</h1>
-          <div className="space-y-6 text-gray-600 font-light leading-relaxed text-lg">
+          <h1 className="motion-reveal motion-delay-1 text-4xl sm:text-5xl md:text-6xl font-editorial mb-6 sm:mb-10 text-gray-900 leading-none text-left">Sobre Mí</h1>
+          <div className="space-y-5 sm:space-y-6 text-gray-600 font-light leading-relaxed text-base sm:text-lg">
             <p className="motion-reveal motion-delay-2">
               Soy Abril Cuenca, diseñadora y animadora digital, con experiencia en ilustración y desarrollo visual.
             </p>
