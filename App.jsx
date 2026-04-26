@@ -146,7 +146,7 @@ const AppShell = () => {
 
   return (
     <div className={`min-h-screen flex flex-col overflow-x-hidden relative text-gray-900 bg-white ${isHome ? '' : 'pt-20'}`}>
-      <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
+      <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden hidden md:block">
         <div
           className="absolute -top-[10%] -right-[5%] w-[600px] h-[600px] rounded-full opacity-40 blur-[120px] animated-orb"
           style={{ background: 'radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, rgba(255, 255, 255, 0) 70%)' }}
