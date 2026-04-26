@@ -39,6 +39,7 @@ const Home = () => {
   return (
     <div className="relative min-h-[100svh] w-full overflow-hidden flex flex-col items-center justify-center bg-slate-100">
       <div className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_top,rgba(255,255,255,0.88),rgba(241,245,249,0.94))]"></div>
+
       <div className={`absolute inset-0 z-0 transition-opacity duration-700 ${isBackdropReady ? 'opacity-100' : 'opacity-0'}`}>
         {backgroundImages.map((img, index) => (
           <div
@@ -57,7 +58,7 @@ const Home = () => {
             />
           </div>
         ))}
-        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.26),rgba(255,255,255,0.14),rgba(255,255,255,0.24))] backdrop-blur-[2px]"></div>
+        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.26),rgba(255,255,255,0.14),rgba(255,255,255,0.24))] backdrop-blur-0 sm:backdrop-blur-[2px]"></div>
       </div>
 
       <div className="relative z-10 text-center flex flex-col items-center px-6 pt-10 sm:pt-0">
@@ -65,6 +66,7 @@ const Home = () => {
           <span className="hero-title-line">ABRIL</span>
           <span className="hero-title-line">CUENCA</span>
         </h1>
+
         <p className="motion-reveal motion-delay-1 mt-4 text-[9px] sm:text-[10px] uppercase tracking-[0.35em] sm:tracking-[0.5em] text-gray-800 font-bold bg-white/45 px-3 sm:px-4 py-1 rounded-full glass-panel">
           Digital Artist & Animator
         </p>
