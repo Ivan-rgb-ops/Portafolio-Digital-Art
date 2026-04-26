@@ -32,8 +32,8 @@ const Navbar = () => {
 
   return (
     <nav className="fixed top-0 left-0 w-full z-50 bg-white/65 backdrop-blur-xl border-b border-gray-100/70">
-      <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-        <Link to="/" className="text-2xl font-serif font-semibold tracking-tight text-gray-900 hover:opacity-70 transition-all duration-300 hover:tracking-[0.02em]">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 h-[72px] sm:h-20 flex items-center justify-between gap-4">
+        <Link to="/" className="max-w-[220px] sm:max-w-none text-lg sm:text-2xl leading-none font-serif font-semibold tracking-tight text-gray-900 hover:opacity-70 transition-all duration-300 hover:tracking-[0.02em]">
           ABRIL CUENCA ART
         </Link>
 
@@ -51,22 +51,24 @@ const Navbar = () => {
 
         <button
           onClick={() => setIsOpen((open) => !open)}
-          className="md:hidden p-2 text-gray-900 hover:bg-gray-100 rounded-full transition-all duration-300 hover:scale-105"
+          className="md:hidden shrink-0 p-2 text-gray-900 hover:bg-gray-100 rounded-full transition-all duration-300 hover:scale-105"
           aria-label="Menu"
         >
           {isOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
 
-      <div className={`fixed inset-0 top-20 bg-white/98 backdrop-blur-xl z-40 transition-transform duration-500 md:hidden ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}>
-        <div className="flex flex-col items-center justify-center h-full space-y-10 text-2xl font-light uppercase tracking-widest text-gray-900">
-          {navLinks.map((link) => (
-            <Link key={link.path} to={link.path} onClick={() => setIsOpen(false)} className="transition-all duration-300 hover:text-blue-500 hover:-translate-y-1">
-              {link.name}
-            </Link>
-          ))}
+      <div className={`fixed inset-x-0 bottom-0 top-[72px] sm:top-20 bg-white z-40 transition-transform duration-500 md:hidden ${isOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+        <div className="flex h-full flex-col justify-between px-6 pt-12 pb-10">
+          <div className="flex flex-col items-center gap-8 text-xl sm:text-2xl font-light uppercase tracking-[0.2em] text-gray-900 text-center">
+            {navLinks.map((link) => (
+              <Link key={link.path} to={link.path} onClick={() => setIsOpen(false)} className="transition-all duration-300 hover:text-blue-500 hover:-translate-y-1">
+                {link.name}
+              </Link>
+            ))}
+          </div>
 
-          <div className="flex space-x-8 pt-10 text-gray-400">
+          <div className="flex items-center justify-center gap-8 pt-8 text-gray-400">
             {SOCIAL_LINKS.map((social) => (
               <a key={social.id} href={social.url} target="_blank" rel="noopener noreferrer" className="hover-icon hover:text-blue-600">
                 {getIcon(social.id)}
