@@ -8,9 +8,9 @@ const About = () => {
           <div className="relative group floating-accent">
             <div className="absolute -inset-4 bg-blue-500/5 rounded-xl blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
             <img
-              src="https://picsum.photos/seed/artist/800/1200"
+              src="/images/FotoAbril.jpeg"
               alt="Abril Cuenca Art Profile"
-              className="w-full h-auto grayscale opacity-90 hover:opacity-100 hover:grayscale-0 transition-all duration-1000 relative z-10 rounded-[28px] shadow-xl border border-gray-100"
+              className="w-full h-auto opacity-95 hover:opacity-100 transition-all duration-700 relative z-10 rounded-[28px] shadow-xl border border-gray-100 object-cover"
             />
           </div>
         </div>
