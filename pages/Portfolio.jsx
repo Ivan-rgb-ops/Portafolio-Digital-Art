@@ -9,6 +9,7 @@ const Portfolio = () => {
   const [selectedGallery, setSelectedGallery] = useState(null);
   const [selectedArtworkIndex, setSelectedArtworkIndex] = useState(0);
   const [galleryIndex, setGalleryIndex] = useState(0);
+  const [isVideoLoading, setIsVideoLoading] = useState(false);
 
   const filteredArtwork = useMemo(() => {
     if (!category) return [];
@@ -222,7 +223,7 @@ const Portfolio = () => {
                     muted
                     playsInline
                     loop
-                    preload="metadata"
+                    preload="auto"
                     onMouseEnter={(e) => e.currentTarget.play()}
                     onMouseLeave={(e) => { e.currentTarget.pause(); e.currentTarget.currentTime = 0; }}
                   />
@@ -272,14 +273,25 @@ const Portfolio = () => {
                 />
               )}
               {selectedGallery.gallery[galleryIndex].imageUrl.endsWith('.mp4') ? (
-                <video
-                  key={`${selectedGallery.id}-${galleryIndex}`}
-                  src={selectedGallery.gallery[galleryIndex].imageUrl}
-                  className="gallery-main-image block w-auto max-w-full h-auto max-h-[62vh] sm:max-h-[70vh] rounded-[22px] sm:rounded-[28px]"
-                  controls
-                  autoPlay
-                  playsInline
-                />
+                <div className="relative flex items-center justify-center w-full h-full">
+                  {isVideoLoading && (
+                    <div className="absolute inset-0 flex items-center justify-center bg-black/30 rounded-[22px] sm:rounded-[28px] z-10">
+                      <div className="w-10 h-10 border-[3px] border-white/20 border-t-white rounded-full animate-spin"></div>
+                    </div>
+                  )}
+                  <video
+                    key={`${selectedGallery.id}-${galleryIndex}`}
+                    src={selectedGallery.gallery[galleryIndex].imageUrl}
+                    className="gallery-main-image block w-auto max-w-full h-auto max-h-[62vh] sm:max-h-[70vh] rounded-[22px] sm:rounded-[28px]"
+                    controls
+                    autoPlay
+                    playsInline
+                    onLoadStart={() => setIsVideoLoading(true)}
+                    onCanPlay={() => setIsVideoLoading(false)}
+                    onPlaying={() => setIsVideoLoading(false)}
+                    onWaiting={() => setIsVideoLoading(true)}
+                  />
+                </div>
               ) : (
                 <img
                   key={`${selectedGallery.id}-${galleryIndex}`}
