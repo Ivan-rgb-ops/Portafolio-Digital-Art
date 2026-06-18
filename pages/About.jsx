@@ -4,13 +4,13 @@ const About = () => {
   return (
     <div className="px-4 sm:px-6 py-12 sm:py-20 max-w-6xl mx-auto">
       <div className="flex flex-col-reverse md:flex-row-reverse gap-10 sm:gap-16 items-start">
-        <div className="w-full md:w-[44%] motion-reveal">
-          <div className="relative group floating-accent">
+        <div className="w-full md:w-[44%] motion-reveal flex justify-center">
+          <div className="relative group floating-accent w-full max-w-[320px]">
             <div className="absolute -inset-4 bg-blue-500/5 rounded-xl blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
             <img
               src="/images/FotoAbril.jpeg"
               alt="Abril Cuenca Art Profile"
-              className="w-full max-h-[480px] opacity-95 hover:opacity-100 transition-all duration-700 relative z-10 rounded-[28px] shadow-xl border border-gray-100 object-cover object-top"
+              className="w-full h-auto opacity-95 hover:opacity-100 transition-all duration-700 relative z-10 rounded-[28px] shadow-xl border border-gray-100"
             />
           </div>
         </div>
