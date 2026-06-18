@@ -218,14 +218,14 @@ const Portfolio = () => {
           >
             <div className="hover-card overflow-hidden bg-gray-50 rounded-[24px] transition-all duration-500 relative">
               {art.imageUrl.endsWith('.mp4') ? (
-                <div className="relative aspect-video w-full overflow-hidden">
+                <div className="relative aspect-video w-full overflow-hidden bg-slate-900">
                   <video
                     src={art.imageUrl}
                     className="w-full h-full object-cover opacity-100 group-hover:scale-[1.025] transition-all duration-700"
                     muted
                     playsInline
                     loop
-                    preload="auto"
+                    preload="none"
                     onMouseEnter={(e) => e.currentTarget.play()}
                     onMouseLeave={(e) => { e.currentTarget.pause(); e.currentTarget.currentTime = 0; }}
                   />
@@ -309,7 +309,7 @@ const Portfolio = () => {
             onClick={(e) => e.stopPropagation()}
           >
             {selectedGallery.gallery[galleryIndex].imageUrl.endsWith('.mp4') ? (
-              <div className="relative flex items-center justify-center max-w-[90vw] md:max-w-[95vw] max-h-[72vh] md:max-h-[86vh]">
+              <div className="relative flex items-center justify-center">
                 {isVideoLoading && (
                   <div className="absolute inset-0 flex items-center justify-center bg-black/30 z-10">
                     <div className="w-10 h-10 border-[3px] border-white/20 border-t-white rounded-full animate-spin"></div>
@@ -317,16 +317,19 @@ const Portfolio = () => {
                 )}
                 <video
                   key={`${selectedGallery.id}-${galleryIndex}`}
-                  src={selectedGallery.gallery[galleryIndex].imageUrl}
-                  className="gallery-main-image pointer-events-auto block w-full h-full max-h-[72vh] md:max-h-[86vh] object-contain rounded-none shadow-2xl"
+                  className="gallery-main-image pointer-events-auto block w-auto max-w-[90vw] md:max-w-[95vw] h-auto max-h-[72vh] md:max-h-[86vh] object-contain rounded-none shadow-2xl"
                   controls
                   autoPlay
                   playsInline
+                  preload="auto"
                   onLoadStart={() => setIsVideoLoading(true)}
                   onCanPlay={() => setIsVideoLoading(false)}
                   onPlaying={() => setIsVideoLoading(false)}
                   onWaiting={() => setIsVideoLoading(true)}
-                />
+                >
+                  <source src={selectedGallery.gallery[galleryIndex].imageUrl} type="video/mp4" />
+                  Tu navegador no soporta el formato de video.
+                </video>
               </div>
             ) : (
               <img
