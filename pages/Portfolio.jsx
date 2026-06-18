@@ -155,6 +155,7 @@ const Portfolio = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
           {CATEGORIES.map((cat, index) => {
             const coverImage =
+              cat.coverImage ||
               ARTWORK.find((a) => a.category === cat.id)?.imageUrl ||
               'https://picsum.photos/seed/placeholder/800/1000';
 

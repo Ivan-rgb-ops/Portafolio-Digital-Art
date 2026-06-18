@@ -30,7 +30,7 @@ export const CATEGORIES = [
   { id: 'linea', label: 'Dibujo de línea' },
   { id: 'retratos', label: 'Retratos y figuras' },
   { id: 'personajes', label: 'Caracteres y props' },
-  { id: '3dmaya', label: '3D Maya' },
+  { id: '3dmaya', label: '3D Maya', coverImage: '/images/Cuarto.jpeg' },
 ];
 
 export const ARTWORK = [
