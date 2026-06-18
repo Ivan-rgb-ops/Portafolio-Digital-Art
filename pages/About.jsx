@@ -10,7 +10,7 @@ const About = () => {
             <img
               src="/images/FotoAbril.jpeg"
               alt="Abril Cuenca Art Profile"
-              className="w-full h-auto opacity-95 hover:opacity-100 transition-all duration-700 relative z-10 rounded-[28px] shadow-xl border border-gray-100 object-cover"
+              className="w-full max-h-[480px] opacity-95 hover:opacity-100 transition-all duration-700 relative z-10 rounded-[28px] shadow-xl border border-gray-100 object-cover object-top"
             />
           </div>
         </div>
