@@ -85,10 +85,38 @@ export const ARTWORK = [
     imageUrl: 'https://picsum.photos/seed/char1/1920/2400',
   },
   {
-    id: '3d-01',
-    title: 'Modelado de escenario',
+    id: '3d-lampara',
+    title: 'Lámpara',
     category: '3dmaya',
-    imageUrl: 'https://picsum.photos/seed/3d1/1920/1920',
+    imageUrl: '/images/Lampara.jpeg',
+    gallery: [
+      { id: '3d-lampara-1', imageUrl: '/images/Lampara.jpeg' },
+      { id: '3d-lampara-2', imageUrl: '/images/Lampara2.jpeg' },
+      { id: '3d-lampara-3', imageUrl: '/images/Lampara3.jpeg' },
+    ],
+  },
+  {
+    id: '3d-nino',
+    title: 'Niño',
+    category: '3dmaya',
+    imageUrl: '/images/Niño.jpeg',
+    gallery: [
+      { id: '3d-nino-1', imageUrl: '/images/Niño.jpeg' },
+      { id: '3d-nino-2', imageUrl: '/images/Niño2.jpeg' },
+      { id: '3d-nino-3', imageUrl: '/images/Niño3.jpeg' },
+    ],
+  },
+  {
+    id: '3d-cuarto',
+    title: 'Cuarto',
+    category: '3dmaya',
+    imageUrl: '/images/Cuarto.jpeg',
+    gallery: [
+      { id: '3d-cuarto-1', imageUrl: '/images/Cuarto.jpeg' },
+      { id: '3d-cuarto-2', imageUrl: '/images/Cuarto2.jpeg' },
+      { id: '3d-cuarto-3', imageUrl: '/images/Cuarto3.jpeg' },
+      { id: '3d-cuarto-4', imageUrl: '/images/Cuarto4.jpeg' },
+    ],
   },
 ];
 
