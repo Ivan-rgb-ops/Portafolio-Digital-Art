@@ -256,13 +256,13 @@ const Portfolio = () => {
 
       {selectedGallery && selectedGallery.gallery && (
         <div
-          className="fixed inset-0 bg-[#070707] z-50 flex items-center justify-center p-4 md:p-8 motion-page cursor-zoom-out select-none"
+          className="fixed inset-0 bg-[#070707] z-[100] flex items-center justify-center p-4 md:p-8 motion-page cursor-zoom-out select-none"
           onClick={closeGallery}
         >
           {/* Close button at top-right of viewport */}
           <button
             onClick={closeGallery}
-            className="fixed top-5 right-5 md:top-8 md:right-8 z-50 text-white/50 hover:text-white transition-all duration-300 hover:scale-110 cursor-pointer"
+            className="fixed top-5 right-5 md:top-8 md:right-8 z-[110] text-white/50 hover:text-white transition-all duration-300 hover:scale-110 cursor-pointer"
             title="Cerrar"
           >
             <X size={32} strokeWidth={1.5} />
@@ -276,7 +276,7 @@ const Portfolio = () => {
                 goToPreviousImage();
               }}
               disabled={isAtSequenceStart}
-              className={`fixed left-4 md:left-8 top-1/2 -translate-y-1/2 z-50 p-2 transition-all duration-300 ${
+              className={`fixed left-4 md:left-8 top-1/2 -translate-y-1/2 z-[110] p-2 transition-all duration-300 ${
                 isAtSequenceStart
                   ? 'opacity-0 pointer-events-none'
                   : 'text-white/50 hover:text-white hover:scale-110 cursor-pointer'
@@ -293,7 +293,7 @@ const Portfolio = () => {
                 goToNextImage();
               }}
               disabled={isAtSequenceEnd}
-              className={`fixed right-4 md:right-8 top-1/2 -translate-y-1/2 z-50 p-2 transition-all duration-300 ${
+              className={`fixed right-4 md:right-8 top-1/2 -translate-y-1/2 z-[110] p-2 transition-all duration-300 ${
                 isAtSequenceEnd
                   ? 'opacity-0 pointer-events-none'
                   : 'text-white/50 hover:text-white hover:scale-110 cursor-pointer'
@@ -305,62 +305,60 @@ const Portfolio = () => {
 
           {/* Center media element */}
           <div
-            className="relative w-full max-w-[min(94vw,1400px)] h-full max-h-[85vh] md:max-h-[90vh] flex flex-col items-center justify-center motion-reveal"
+            className="relative w-full h-full flex items-center justify-center motion-reveal"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="relative max-w-full max-h-full flex flex-col items-center justify-center">
-              {selectedGallery.gallery[galleryIndex].imageUrl.endsWith('.mp4') ? (
-                <div className="relative flex items-center justify-center w-full h-full">
-                  {isVideoLoading && (
-                    <div className="absolute inset-0 flex items-center justify-center bg-black/30 z-10">
-                      <div className="w-10 h-10 border-[3px] border-white/20 border-t-white rounded-full animate-spin"></div>
-                    </div>
-                  )}
-                  <video
-                    key={`${selectedGallery.id}-${galleryIndex}`}
-                    src={selectedGallery.gallery[galleryIndex].imageUrl}
-                    className="gallery-main-image pointer-events-auto block w-auto max-w-[85vw] md:max-w-[92vw] h-auto max-h-[75vh] md:max-h-[84vh] object-contain rounded-none shadow-2xl"
-                    controls
-                    autoPlay
-                    playsInline
-                    onLoadStart={() => setIsVideoLoading(true)}
-                    onCanPlay={() => setIsVideoLoading(false)}
-                    onPlaying={() => setIsVideoLoading(false)}
-                    onWaiting={() => setIsVideoLoading(true)}
-                  />
-                </div>
-              ) : (
-                <img
-                  key={`${selectedGallery.id}-${galleryIndex}`}
-                  src={getImageUrl(selectedGallery.gallery[galleryIndex].imageUrl, { width: 2200, fit: 'limit' })}
-                  alt={`${selectedGallery.title} ${galleryIndex + 1}`}
-                  className="gallery-main-image pointer-events-auto block w-auto max-w-[85vw] md:max-w-[92vw] h-auto max-h-[75vh] md:max-h-[84vh] object-contain rounded-none shadow-2xl select-none"
-                />
-              )}
-
-              {/* Title & Multi-image dots below the image/video */}
-              <div className="mt-6 text-center select-none">
-                <p className="text-white/85 text-[11px] md:text-[12px] uppercase tracking-[0.35em] font-light">
-                  {selectedGallery.title}
-                </p>
-                {selectedGallery.gallery.length > 1 && (
-                  <div className="mt-4 flex items-center justify-center gap-2.5">
-                    {selectedGallery.gallery.map((_, idx) => (
-                      <button
-                        key={idx}
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          setGalleryIndex(idx);
-                        }}
-                        className={`h-1 rounded-full transition-all duration-300 cursor-pointer ${
-                          idx === galleryIndex ? 'bg-white w-6' : 'bg-white/30 w-1.5 hover:bg-white/60'
-                        }`}
-                      />
-                    ))}
+            {selectedGallery.gallery[galleryIndex].imageUrl.endsWith('.mp4') ? (
+              <div className="relative flex items-center justify-center max-w-[90vw] md:max-w-[95vw] max-h-[85vh] md:max-h-[92vh]">
+                {isVideoLoading && (
+                  <div className="absolute inset-0 flex items-center justify-center bg-black/30 z-10">
+                    <div className="w-10 h-10 border-[3px] border-white/20 border-t-white rounded-full animate-spin"></div>
                   </div>
                 )}
+                <video
+                  key={`${selectedGallery.id}-${galleryIndex}`}
+                  src={selectedGallery.gallery[galleryIndex].imageUrl}
+                  className="gallery-main-image pointer-events-auto block w-full h-full max-h-[85vh] md:max-h-[92vh] object-contain rounded-none shadow-2xl"
+                  controls
+                  autoPlay
+                  playsInline
+                  onLoadStart={() => setIsVideoLoading(true)}
+                  onCanPlay={() => setIsVideoLoading(false)}
+                  onPlaying={() => setIsVideoLoading(false)}
+                  onWaiting={() => setIsVideoLoading(true)}
+                />
               </div>
-            </div>
+            ) : (
+              <img
+                key={`${selectedGallery.id}-${galleryIndex}`}
+                src={getImageUrl(selectedGallery.gallery[galleryIndex].imageUrl, { width: 2400, fit: 'limit' })}
+                alt={`${selectedGallery.title} ${galleryIndex + 1}`}
+                className="gallery-main-image pointer-events-auto block w-auto max-w-[90vw] md:max-w-[95vw] h-auto max-h-[85vh] md:max-h-[92vh] object-contain rounded-none shadow-2xl select-none"
+              />
+            )}
+          </div>
+
+          {/* Floating Title & Multi-image dots at bottom of viewport */}
+          <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[110] text-center select-none pointer-events-none">
+            <p className="text-white/80 text-[11px] md:text-[12px] uppercase tracking-[0.35em] font-light drop-shadow-md">
+              {selectedGallery.title}
+            </p>
+            {selectedGallery.gallery.length > 1 && (
+              <div className="mt-3 flex items-center justify-center gap-2.5 pointer-events-auto">
+                {selectedGallery.gallery.map((_, idx) => (
+                  <button
+                    key={idx}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setGalleryIndex(idx);
+                    }}
+                    className={`h-1.5 rounded-full transition-all duration-300 cursor-pointer ${
+                      idx === galleryIndex ? 'bg-white w-6' : 'bg-white/30 w-1.5 hover:bg-white/60'
+                    }`}
+                  />
+                ))}
+              </div>
+            )}
           </div>
         </div>
       )}
