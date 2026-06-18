@@ -1,7 +1,7 @@
 import React, { useMemo, useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { CATEGORIES, ARTWORK } from '../constants';
-import { ArrowLeft, X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowLeft, X, ChevronLeft, ChevronRight, Play } from 'lucide-react';
 import { getImageUrl } from '../utils/media';
 
 const Portfolio = () => {
@@ -214,13 +214,33 @@ const Portfolio = () => {
             onClick={() => openGallery(art, index)}
           >
             <div className="hover-card overflow-hidden bg-gray-50 rounded-[24px] transition-all duration-500 relative">
-              <img
-                src={getImageUrl(art.imageUrl, { width: 1200, fit: 'limit' })}
-                alt={art.title}
-                className="w-full h-auto object-cover opacity-100 group-hover:scale-[1.025] group-hover:opacity-95 transition-all duration-700"
-                loading="lazy"
-                decoding="async"
-              />
+              {art.imageUrl.endsWith('.mp4') ? (
+                <div className="relative aspect-video w-full overflow-hidden">
+                  <video
+                    src={art.imageUrl}
+                    className="w-full h-full object-cover opacity-100 group-hover:scale-[1.025] transition-all duration-700"
+                    muted
+                    playsInline
+                    loop
+                    preload="metadata"
+                    onMouseEnter={(e) => e.currentTarget.play()}
+                    onMouseLeave={(e) => { e.currentTarget.pause(); e.currentTarget.currentTime = 0; }}
+                  />
+                  <div className="absolute inset-0 flex items-center justify-center bg-black/10 group-hover:bg-black/20 transition-colors pointer-events-none">
+                    <div className="w-12 h-12 rounded-full bg-white/90 backdrop-blur-sm shadow-md flex items-center justify-center text-gray-900 group-hover:scale-110 transition-transform duration-300">
+                      <Play size={20} fill="currentColor" className="ml-0.5" />
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <img
+                  src={getImageUrl(art.imageUrl, { width: 1200, fit: 'limit' })}
+                  alt={art.title}
+                  className="w-full h-auto object-cover opacity-100 group-hover:scale-[1.025] group-hover:opacity-95 transition-all duration-700"
+                  loading="lazy"
+                  decoding="async"
+                />
+              )}
               <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,transparent,rgba(15,23,42,0.05))] opacity-0 transition-opacity duration-500 group-hover:opacity-100"></div>
               {art.gallery && art.gallery.length > 1 && (
                 <div className="absolute top-3 right-3 bg-white/80 backdrop-blur-sm px-2 py-1 rounded-full text-[10px] font-bold text-gray-900 shadow-sm">
@@ -242,19 +262,32 @@ const Portfolio = () => {
               className="gallery-frame relative w-auto max-w-full rounded-[22px] sm:rounded-[28px] overflow-hidden mb-3 sm:mb-4"
               onClick={(e) => e.stopPropagation()}
             >
-              <img
-                key={`backdrop-${selectedGallery.id}-${galleryIndex}`}
-                src={getImageUrl(selectedGallery.gallery[galleryIndex].imageUrl, { width: 1800, fit: 'limit' })}
-                alt=""
-                aria-hidden="true"
-                className="gallery-backdrop w-full h-full object-cover rounded-[22px] sm:rounded-[28px]"
-              />
-              <img
-                key={`${selectedGallery.id}-${galleryIndex}`}
-                src={getImageUrl(selectedGallery.gallery[galleryIndex].imageUrl, { width: 1800, fit: 'limit' })}
-                alt={`${selectedGallery.title} ${galleryIndex + 1}`}
-                className="gallery-main-image block w-auto max-w-full h-auto max-h-[62vh] sm:max-h-[70vh] rounded-[22px] sm:rounded-[28px]"
-              />
+              {!selectedGallery.gallery[galleryIndex].imageUrl.endsWith('.mp4') && (
+                <img
+                  key={`backdrop-${selectedGallery.id}-${galleryIndex}`}
+                  src={getImageUrl(selectedGallery.gallery[galleryIndex].imageUrl, { width: 1800, fit: 'limit' })}
+                  alt=""
+                  aria-hidden="true"
+                  className="gallery-backdrop w-full h-full object-cover rounded-[22px] sm:rounded-[28px]"
+                />
+              )}
+              {selectedGallery.gallery[galleryIndex].imageUrl.endsWith('.mp4') ? (
+                <video
+                  key={`${selectedGallery.id}-${galleryIndex}`}
+                  src={selectedGallery.gallery[galleryIndex].imageUrl}
+                  className="gallery-main-image block w-auto max-w-full h-auto max-h-[62vh] sm:max-h-[70vh] rounded-[22px] sm:rounded-[28px]"
+                  controls
+                  autoPlay
+                  playsInline
+                />
+              ) : (
+                <img
+                  key={`${selectedGallery.id}-${galleryIndex}`}
+                  src={getImageUrl(selectedGallery.gallery[galleryIndex].imageUrl, { width: 1800, fit: 'limit' })}
+                  alt={`${selectedGallery.title} ${galleryIndex + 1}`}
+                  className="gallery-main-image block w-auto max-w-full h-auto max-h-[62vh] sm:max-h-[70vh] rounded-[22px] sm:rounded-[28px]"
+                />
+              )}
 
               {filteredArtwork.length > 1 && (
                 <button

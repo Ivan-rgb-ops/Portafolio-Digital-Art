@@ -118,6 +118,12 @@ export const ARTWORK = [
       { id: '3d-cuarto-4', imageUrl: '/images/Cuarto4.jpeg' },
     ],
   },
+  {
+    id: '3d-sonic',
+    title: 'Sonic',
+    category: '3dmaya',
+    imageUrl: '/images/Sonic.mp4',
+  },
 ];
 
 export const STORE_ITEMS = [
