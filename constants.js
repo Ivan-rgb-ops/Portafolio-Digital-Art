@@ -126,19 +126,4 @@ export const ARTWORK = [
   },
 ];
 
-export const STORE_ITEMS = [
-  {
-    id: 's1',
-    name: 'Original: Sunset Canvas',
-    price: 450.0,
-    imageUrl: 'https://picsum.photos/seed/store1/1200/1200',
-    category: 'original',
-  },
-  {
-    id: 's2',
-    name: 'Print: Character Anthology',
-    price: 25.0,
-    imageUrl: 'https://picsum.photos/seed/store2/1200/1200',
-    category: 'print',
-  },
-];
+
