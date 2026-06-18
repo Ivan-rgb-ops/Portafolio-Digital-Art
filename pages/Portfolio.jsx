@@ -309,7 +309,7 @@ const Portfolio = () => {
             onClick={(e) => e.stopPropagation()}
           >
             {selectedGallery.gallery[galleryIndex].imageUrl.endsWith('.mp4') ? (
-              <div className="relative flex items-center justify-center max-w-[90vw] md:max-w-[95vw] max-h-[85vh] md:max-h-[92vh]">
+              <div className="relative flex items-center justify-center max-w-[90vw] md:max-w-[95vw] max-h-[72vh] md:max-h-[86vh]">
                 {isVideoLoading && (
                   <div className="absolute inset-0 flex items-center justify-center bg-black/30 z-10">
                     <div className="w-10 h-10 border-[3px] border-white/20 border-t-white rounded-full animate-spin"></div>
@@ -318,7 +318,7 @@ const Portfolio = () => {
                 <video
                   key={`${selectedGallery.id}-${galleryIndex}`}
                   src={selectedGallery.gallery[galleryIndex].imageUrl}
-                  className="gallery-main-image pointer-events-auto block w-full h-full max-h-[85vh] md:max-h-[92vh] object-contain rounded-none shadow-2xl"
+                  className="gallery-main-image pointer-events-auto block w-full h-full max-h-[72vh] md:max-h-[86vh] object-contain rounded-none shadow-2xl"
                   controls
                   autoPlay
                   playsInline
@@ -333,7 +333,7 @@ const Portfolio = () => {
                 key={`${selectedGallery.id}-${galleryIndex}`}
                 src={getImageUrl(selectedGallery.gallery[galleryIndex].imageUrl, { width: 2400, fit: 'limit' })}
                 alt={`${selectedGallery.title} ${galleryIndex + 1}`}
-                className="gallery-main-image pointer-events-auto block w-auto max-w-[90vw] md:max-w-[95vw] h-auto max-h-[85vh] md:max-h-[92vh] object-contain rounded-none shadow-2xl select-none"
+                className="gallery-main-image pointer-events-auto block w-auto max-w-[90vw] md:max-w-[95vw] h-auto max-h-[72vh] md:max-h-[86vh] object-contain rounded-none shadow-2xl select-none"
               />
             )}
           </div>
