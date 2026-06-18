@@ -176,7 +176,6 @@ img {
 .gallery-main-image {
   position: relative;
   z-index: 1;
-  pointer-events: none;
   animation: gallery-image-in 420ms var(--ease-smooth);
   will-change: transform, opacity;
 }

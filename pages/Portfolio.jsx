@@ -256,34 +256,70 @@ const Portfolio = () => {
 
       {selectedGallery && selectedGallery.gallery && (
         <div
-          className="fixed inset-0 bg-black/92 backdrop-blur-xl z-50 flex items-center justify-center p-3 sm:p-4 motion-page"
+          className="fixed inset-0 bg-[#070707] z-50 flex items-center justify-center p-4 md:p-8 motion-page cursor-zoom-out select-none"
           onClick={closeGallery}
         >
-          <div className="relative w-full max-w-[min(96vw,1100px)] flex flex-col items-center motion-reveal">
-            <div
-              className="gallery-frame relative w-auto max-w-full rounded-[22px] sm:rounded-[28px] overflow-hidden mb-3 sm:mb-4"
-              onClick={(e) => e.stopPropagation()}
+          {/* Close button at top-right of viewport */}
+          <button
+            onClick={closeGallery}
+            className="fixed top-5 right-5 md:top-8 md:right-8 z-50 text-white/50 hover:text-white transition-all duration-300 hover:scale-110 cursor-pointer"
+            title="Cerrar"
+          >
+            <X size={32} strokeWidth={1.5} />
+          </button>
+
+          {/* Navigation arrows fixed to screen edges */}
+          {filteredArtwork.length > 1 && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                goToPreviousImage();
+              }}
+              disabled={isAtSequenceStart}
+              className={`fixed left-4 md:left-8 top-1/2 -translate-y-1/2 z-50 p-2 transition-all duration-300 ${
+                isAtSequenceStart
+                  ? 'opacity-0 pointer-events-none'
+                  : 'text-white/50 hover:text-white hover:scale-110 cursor-pointer'
+              }`}
             >
-              {!selectedGallery.gallery[galleryIndex].imageUrl.endsWith('.mp4') && (
-                <img
-                  key={`backdrop-${selectedGallery.id}-${galleryIndex}`}
-                  src={getImageUrl(selectedGallery.gallery[galleryIndex].imageUrl, { width: 1800, fit: 'limit' })}
-                  alt=""
-                  aria-hidden="true"
-                  className="gallery-backdrop w-full h-full object-cover rounded-[22px] sm:rounded-[28px]"
-                />
-              )}
+              <ChevronLeft size={48} strokeWidth={1} />
+            </button>
+          )}
+
+          {filteredArtwork.length > 1 && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                goToNextImage();
+              }}
+              disabled={isAtSequenceEnd}
+              className={`fixed right-4 md:right-8 top-1/2 -translate-y-1/2 z-50 p-2 transition-all duration-300 ${
+                isAtSequenceEnd
+                  ? 'opacity-0 pointer-events-none'
+                  : 'text-white/50 hover:text-white hover:scale-110 cursor-pointer'
+              }`}
+            >
+              <ChevronRight size={48} strokeWidth={1} />
+            </button>
+          )}
+
+          {/* Center media element */}
+          <div
+            className="relative w-full max-w-[min(94vw,1400px)] h-full max-h-[85vh] md:max-h-[90vh] flex flex-col items-center justify-center motion-reveal"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="relative max-w-full max-h-full flex flex-col items-center justify-center">
               {selectedGallery.gallery[galleryIndex].imageUrl.endsWith('.mp4') ? (
                 <div className="relative flex items-center justify-center w-full h-full">
                   {isVideoLoading && (
-                    <div className="absolute inset-0 flex items-center justify-center bg-black/30 rounded-[22px] sm:rounded-[28px] z-10">
+                    <div className="absolute inset-0 flex items-center justify-center bg-black/30 z-10">
                       <div className="w-10 h-10 border-[3px] border-white/20 border-t-white rounded-full animate-spin"></div>
                     </div>
                   )}
                   <video
                     key={`${selectedGallery.id}-${galleryIndex}`}
                     src={selectedGallery.gallery[galleryIndex].imageUrl}
-                    className="gallery-main-image block w-auto max-w-full h-auto max-h-[62vh] sm:max-h-[70vh] rounded-[22px] sm:rounded-[28px]"
+                    className="gallery-main-image pointer-events-auto block w-auto max-w-[85vw] md:max-w-[92vw] h-auto max-h-[75vh] md:max-h-[84vh] object-contain rounded-none shadow-2xl"
                     controls
                     autoPlay
                     playsInline
@@ -296,66 +332,34 @@ const Portfolio = () => {
               ) : (
                 <img
                   key={`${selectedGallery.id}-${galleryIndex}`}
-                  src={getImageUrl(selectedGallery.gallery[galleryIndex].imageUrl, { width: 1800, fit: 'limit' })}
+                  src={getImageUrl(selectedGallery.gallery[galleryIndex].imageUrl, { width: 2200, fit: 'limit' })}
                   alt={`${selectedGallery.title} ${galleryIndex + 1}`}
-                  className="gallery-main-image block w-auto max-w-full h-auto max-h-[62vh] sm:max-h-[70vh] rounded-[22px] sm:rounded-[28px]"
+                  className="gallery-main-image pointer-events-auto block w-auto max-w-[85vw] md:max-w-[92vw] h-auto max-h-[75vh] md:max-h-[84vh] object-contain rounded-none shadow-2xl select-none"
                 />
               )}
 
-              {filteredArtwork.length > 1 && (
-                <button
-                  onClick={goToPreviousImage}
-                  disabled={isAtSequenceStart}
-                  className={`absolute z-20 left-2 sm:left-4 top-1/2 -translate-y-1/2 p-2 rounded-full transition-all duration-300 ${
-                    isAtSequenceStart
-                      ? 'bg-white/10 text-white/35 cursor-not-allowed'
-                      : 'bg-white/20 hover:bg-white/40 text-white hover:scale-110'
-                  }`}
-                >
-                  <ChevronLeft size={20} className="sm:w-6 sm:h-6" />
-                </button>
-              )}
-
-              {filteredArtwork.length > 1 && (
-                <button
-                  onClick={goToNextImage}
-                  disabled={isAtSequenceEnd}
-                  className={`absolute z-20 right-2 sm:right-4 top-1/2 -translate-y-1/2 p-2 rounded-full transition-all duration-300 ${
-                    isAtSequenceEnd
-                      ? 'bg-white/10 text-white/35 cursor-not-allowed'
-                      : 'bg-white/20 hover:bg-white/40 text-white hover:scale-110'
-                  }`}
-                >
-                  <ChevronRight size={20} className="sm:w-6 sm:h-6" />
-                </button>
-              )}
-
-              <button
-                onClick={closeGallery}
-                className="absolute z-20 top-2 sm:top-4 right-2 sm:right-4 bg-white/20 hover:bg-white/40 text-white p-2 rounded-full transition-all duration-300 hover:rotate-90"
-              >
-                <X size={20} className="sm:w-6 sm:h-6" />
-              </button>
-
-              <div className="absolute z-20 bottom-3 sm:bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
-                {selectedGallery.gallery.map((_, idx) => (
-                  <div
-                    key={idx}
-                    className={`h-2 rounded-full transition-all ${
-                      idx === galleryIndex ? 'bg-white w-6' : 'bg-white/50 w-2'
-                    }`}
-                  />
-                ))}
+              {/* Title & Multi-image dots below the image/video */}
+              <div className="mt-6 text-center select-none">
+                <p className="text-white/85 text-[11px] md:text-[12px] uppercase tracking-[0.35em] font-light">
+                  {selectedGallery.title}
+                </p>
+                {selectedGallery.gallery.length > 1 && (
+                  <div className="mt-4 flex items-center justify-center gap-2.5">
+                    {selectedGallery.gallery.map((_, idx) => (
+                      <button
+                        key={idx}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setGalleryIndex(idx);
+                        }}
+                        className={`h-1 rounded-full transition-all duration-300 cursor-pointer ${
+                          idx === galleryIndex ? 'bg-white w-6' : 'bg-white/30 w-1.5 hover:bg-white/60'
+                        }`}
+                      />
+                    ))}
+                  </div>
+                )}
               </div>
-            </div>
-
-            <div className="text-center" onClick={(e) => e.stopPropagation()}>
-              <p className="text-white text-xs sm:text-sm font-light uppercase tracking-[0.3em] sm:tracking-widest">
-                {selectedGallery.title}
-              </p>
-              <p className="text-white/60 text-xs mt-2">
-                {galleryIndex + 1} de {selectedGallery.gallery.length}
-              </p>
             </div>
           </div>
         </div>
