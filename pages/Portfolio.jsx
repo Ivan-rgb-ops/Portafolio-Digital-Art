@@ -1,4 +1,5 @@
 import React, { useMemo, useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { useParams, Link } from 'react-router-dom';
 import { CATEGORIES, ARTWORK } from '../constants';
 import { ArrowLeft, X, ChevronLeft, ChevronRight, Play } from 'lucide-react';
@@ -253,8 +254,7 @@ const Portfolio = () => {
           </div>
         ))}
       </div>
-
-      {selectedGallery && selectedGallery.gallery && (
+      {selectedGallery && selectedGallery.gallery && createPortal(
         <div
           className="fixed inset-0 bg-[#070707] z-[100] flex items-center justify-center p-4 md:p-8 motion-page cursor-zoom-out select-none"
           onClick={closeGallery}
@@ -360,8 +360,9 @@ const Portfolio = () => {
               </div>
             )}
           </div>
-        </div>
-      )}
+        </div>,
+        document.body
+      )}}
     </div>
   );
 };
